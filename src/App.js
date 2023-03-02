@@ -9,12 +9,27 @@ function App() {
 
     const removeLines = useCallback(() => {
         if (!currentEditor) return
-        currentEditor.setData(data.replaceAll('<p>&nbsp;</p>', ''))
+        const newData = data.replaceAll('<p>&nbsp;</p>', '')
+            .replaceAll(/(\[(h|H)1\])|(\[\/(h|H)1\])/g, '') // replace any [h1]{text}[/h1]
+            .replaceAll(/(\[(h|H)2\])|(\[\/(h|H)2\])/g, '')
+        currentEditor.setData(newData)
+        setData(newData)
     }, [currentEditor, data])
 
-    const keydownHandler = useCallback(function (e) {
-        if (e.keyCode === 13 && e.ctrlKey) removeLines()
+    const keydownHandler = useCallback(async function (e) {
+        if (e.keyCode === 13 && e.ctrlKey) {
+            await removeLines()
+            window.scrollTo({
+                top: 0
+            })
+        }
     }, [removeLines])
+
+    useEffect( () => {
+        const blob = new Blob([data], {type: 'text/html'});
+        const clipboardItem = new window.ClipboardItem({'text/html': blob});
+        navigator.clipboard.write([clipboardItem]).then(null)
+    }, [data])
 
     useEffect(() => {
         document.addEventListener('keydown', keydownHandler);
@@ -23,25 +38,23 @@ function App() {
         }
     }, [keydownHandler])
 
-    return (
-        <div style={{width: "100%", display: "flex"}}>
-            <CKEditor
-                editor={ClassicEditor}
-                data={data}
-                onReady={(editor) => {
-                    setCurrentEditor(editor)
-                }}
-                onChange={(event, editor) => {
-                    setData(editor.getData())
-                }}
-            />
-            <button onClick={() => {
-                removeLines()
-            }} style={{marginLeft: "50px", padding: "10px 20px"}}>
-                Remove break lines
-            </button>
-        </div>
-    );
+    return (<div style={{width: "100%", display: "flex"}}>
+        <CKEditor
+            editor={ClassicEditor}
+            data={data}
+            onReady={(editor) => {
+                setCurrentEditor(editor)
+            }}
+            onChange={(event, editor) => {
+                setData(editor.getData())
+            }}
+        />
+        <button onClick={() => {
+            removeLines()
+        }} className='remove-btn'>
+            Remove break lines
+        </button>
+    </div>);
 }
 
 export default App;

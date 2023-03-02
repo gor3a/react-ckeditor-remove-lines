@@ -1,0 +1,9 @@
+.ck-editor {
+    max-width: 50%;
+}
+
+.remove-btn {
+    margin-left: 50px;
+    padding: 10px 20px;
+    max-height: 50px;
+}
