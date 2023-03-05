@@ -3,6 +3,8 @@ import {CKEditor} from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {useCallback, useEffect, useState} from "react";
 
+const dynamicNumber = '213-927-3700'
+
 function App() {
     const [data, setData] = useState('')
     const [currentEditor, setCurrentEditor] = useState(null)
@@ -12,6 +14,7 @@ function App() {
         const newData = data.replaceAll('<p>&nbsp;</p>', '')
             .replaceAll(/(\[(h|H)1\])|(\[\/(h|H)1\])/g, '') // replace any [h1]{text}[/h1]
             .replaceAll(/(\[(h|H)2\])|(\[\/(h|H)2\])/g, '')
+            .replaceAll(/(\(?\d{0,3}\)?).?\d{0,3}-\d{0,4}/g, dynamicNumber)
         currentEditor.setData(newData)
         setData(newData)
     }, [currentEditor, data])
