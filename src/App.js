@@ -14,7 +14,7 @@ function App() {
         const newData = data.replaceAll('<p>&nbsp;</p>', '')
             .replaceAll(/(\[(h|H)1\])|(\[\/(h|H)1\])/g, '') // replace any [h1]{text}[/h1]
             .replaceAll(/(\[(h|H)2\])|(\[\/(h|H)2\])/g, '')
-            .replaceAll(/(\(?\d{0,3}\)?)\S.?\d{0,3}-\d{0,4}\S/g, dynamicNumber)
+            .replaceAll(/\(?\d{0,3}\)?-\d{0,3}-\d{0,4}/g, dynamicNumber)
         currentEditor.setData(newData)
         setData(newData)
     }, [currentEditor, data])
