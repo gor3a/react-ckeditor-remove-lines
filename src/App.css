@@ -2,6 +2,10 @@
     max-width: 50%;
 }
 
+textarea {
+    margin-left: 50px;
+}
+
 .remove-btn {
     margin-left: 50px;
     padding: 10px 20px;
