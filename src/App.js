@@ -15,7 +15,7 @@ function App() {
             .replaceAll(/(\[(h|H)1\])|(\[\/(h|H)1\])/g, '') // replace any [h1]{text}[/h1]
             .replaceAll(/(\[(h|H)2\])|(\[\/(h|H)2\])/g, '')
             .replaceAll(/(\(?\d{0,3}\)?[-|\s]\d{0,3}-\d{0,4})/g, dynamicNumber)
-            .replaceAll(/(<p>)?(\[(INSERT INFOGRAPHIC HERE|INSERTAR INFOGRAFÍA AQUÍ)\]).+?(?<=(<\/p>))/g, dynamicNumber)
+            .replaceAll(/(<p>)?(\[(INSERT INFOGRAPHIC HERE|INSERTAR INFOGRAFÍA AQUÍ)\]).+?(?<=(<\/p>))/g, '')
         currentEditor.setData(newData)
         setData(newData)
     }, [currentEditor, data])
